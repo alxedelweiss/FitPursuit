@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.4
 
 # Set base image (host OS)
-FROM python:3.11-alpine
+FROM python:3.11-slim
 
 # Set the working directory in the container
 WORKDIR /app
@@ -13,7 +13,7 @@ COPY requirements.txt /app
 COPY . /app
 
 # Install dependencies
-RUN apk update && apk add --no-cache build-base musl-dev curl
+RUN apt-get update && apt-get install -y build-essential curl
 RUN pip cache purge
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip3 install -r requirements.txt
